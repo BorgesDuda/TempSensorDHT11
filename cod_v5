@@ -1,0 +1,57 @@
+#include "DHT.h"
+
+#define DHTPIN 2     // Pino digital conectado ao sensor DHT
+#define DHTTYPE DHT11
+int ledPin = 13;
+int piezoPin = 9;
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println(F("DHTxx test!"));
+  pinMode(ledPin, OUTPUT);
+  pinMode(piezoPin, OUTPUT);
+  dht.begin();
+}
+
+void loop() {
+  // Espera alguns segundos entre as medições.
+  delay(2000);
+  
+  // Lê a temperatura e a umidade
+  float t = dht.readTemperature();
+  float h = dht.readHumidity();
+
+  // Verifica se as leituras falharam e sai do loop em caso positivo
+  if (isnan(t) || isnan(h)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+
+  Serial.print("Temperatura: ");
+  Serial.print(t);
+  Serial.println(" °C");
+
+  Serial.print("Umidade: ");
+  Serial.print(h);
+  Serial.println(" %");
+
+  // Verifica a temperatura para acionar o alarme
+  if (t > 25) {
+    digitalWrite(ledPin, HIGH);
+    digitalWrite(piezoPin, HIGH);
+    tone(piezoPin, 3047, 400);
+    delay(1000);
+    noTone(piezoPin);
+    delay(100);
+    Serial.print("ON, T=");
+  } else {
+    digitalWrite(piezoPin, LOW);
+    digitalWrite(ledPin, LOW);
+    Serial.print("OFF, T=");
+  }
+
+  Serial.print(t);
+  Serial.println(" °C");
+}
