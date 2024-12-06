@@ -127,7 +127,7 @@ if (msg.payload) {
 
 - **Host:** mqtt-dashboard.com
 - **Port:** 8884
-- **ClientID:** clientId-7qyjclq0wY
+- **ClientID:** clientId-7qyjclq0wY *(atualiza automaticamente, não precisa preencher)*
 - **Connect:** 
 - **Username:** Deixe em branco para não usar autenticação
 - **Password:** Deixe em branco para não usar autenticação
