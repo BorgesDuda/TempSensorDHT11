@@ -38,7 +38,7 @@ void loop() {
   Serial.println(" %");
 
   // Verifica a temperatura para acionar o alarme
-  if (t > 25) {
+  if (t > 26) {
     digitalWrite(ledPin, HIGH);
     digitalWrite(piezoPin, HIGH);
     tone(piezoPin, 3047, 400);
